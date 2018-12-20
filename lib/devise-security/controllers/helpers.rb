@@ -106,6 +106,7 @@ module DeviseSecurity
         def ignore_password_expire?
           if current_tenant.nil?
             return false
+          end  
           return !current_tenant.password_expired
         end
     end
