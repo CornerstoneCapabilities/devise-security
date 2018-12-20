@@ -6,6 +6,7 @@ module DeviseSecurity
       extend ActiveSupport::Concern
 
       included do
+        before_action :authenticate_enterprise
         before_action :handle_password_change
         before_action :handle_paranoid_verification
       end
@@ -103,8 +104,9 @@ module DeviseSecurity
 
         # allow to overwrite for some special handlings
         def ignore_password_expire?
-          byebug
-          warden.session
+          if current_tenant.nil?
+            return false
+          return !current_tenant.password_expired
         end
     end
   end
