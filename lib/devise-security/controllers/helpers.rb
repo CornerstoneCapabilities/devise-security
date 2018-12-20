@@ -6,6 +6,7 @@ module DeviseSecurity
       extend ActiveSupport::Concern
 
       included do
+        set_current_tenant_by_subdomain(:Enterprise, :subdomain)
         before_action :handle_password_change
         before_action :handle_paranoid_verification
       end
