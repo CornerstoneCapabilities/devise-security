@@ -103,7 +103,8 @@ module DeviseSecurity
 
         # allow to overwrite for some special handlings
         def ignore_password_expire?
-          warden.session(scope)[:ignore_password_expire]
+          byebug
+          warden.session
         end
     end
   end
