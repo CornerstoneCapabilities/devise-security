@@ -104,6 +104,7 @@ module DeviseSecurity
 
         # allow to overwrite for some special handlings
         def ignore_password_expire?
+          byebug
           if current_tenant.nil?
             return false
           end  
