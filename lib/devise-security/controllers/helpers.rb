@@ -6,7 +6,6 @@ module DeviseSecurity
       extend ActiveSupport::Concern
 
       included do
-        before_action :authenticate_enterprise
         before_action :handle_password_change
         before_action :handle_paranoid_verification
       end
@@ -49,6 +48,7 @@ module DeviseSecurity
 
           if !devise_controller? && !ignore_password_expire? && !request.format.nil? && request.format.html?
             Devise.mappings.keys.flatten.any? do |scope|
+              byebug
               if signed_in?(scope) && warden.session(scope)['password_expired']
                 # re-check to avoid infinite loop if date changed after login attempt
                 if send(:"current_#{scope}").try(:need_change_password?)
@@ -104,7 +104,6 @@ module DeviseSecurity
 
         # allow to overwrite for some special handlings
         def ignore_password_expire?
-          byebug
           return !current_tenant.password_expire
         end
     end
